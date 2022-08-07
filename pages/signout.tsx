@@ -1,16 +1,24 @@
-import React, { useState } from "react"
+import React from "react"
 import { useRouter } from "next/router"
-import Link from "next/link"
-import { Alert, Button, InputLabel, Snackbar, TextField } from "@mui/material"
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import {AuthProvider, useAuthContext} from "../context/AuthContext"
+import { getAuth, signOut } from "firebase/auth"
+import { useAuthContext} from "../context/AuthContext"
 import { app } from "../utils/firebase/firebaseClient"
+import {Loading} from "../components/loading";
 
 const Signout = () => {
   const router = useRouter()
-  const { user } = useAuthContext()
+  const {user} = useAuthContext()
+  const isReady = router.isReady;
+  if (!isReady) {
+    return  Loading
+  }
   const auth = getAuth(app)
   const isLoggedIn = !!user
+  if (!isLoggedIn) {
+    router.push('/login')
+    return Loading
+  }
+  signOut(auth)
   return (
     <div>
       ...sign outing

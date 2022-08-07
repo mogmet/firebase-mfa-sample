@@ -3,7 +3,7 @@ import { useRouter } from "next/router"
 import Link from "next/link"
 import { Alert, Button, InputLabel, Snackbar, TextField } from "@mui/material"
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth"
-import {AuthProvider, useAuthContext} from "../context/AuthContext"
+import {useAuthContext} from "../context/AuthContext"
 import { app } from "../utils/firebase/firebaseClient"
 
 const Signup = () => {
@@ -11,14 +11,13 @@ const Signup = () => {
   const { user } = useAuthContext()
   const auth = getAuth(app)
   const isLoggedIn = !!user
-  console.log(user, isLoggedIn)
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     await createUserWithEmailAndPassword(auth, email, password)
-    router.push("/mfa/create")
+    router.push("/email/send")
   }
   const handleClose = async () => {
     await router.push("/")
