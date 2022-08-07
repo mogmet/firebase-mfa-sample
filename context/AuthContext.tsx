@@ -34,9 +34,20 @@ export const AuthProvider = ({ children }: AuthProps) => {
     const authStateChanged = () => {
       const auth = getAuth(app)
       onAuthStateChanged(auth, async (user) => {
-        console.log('setuser', user?.email)
+        console.table(user)
         setUser(user)
-        !user && !isAvailableForViewing && (await router.push("/login"))
+        if (!user && !isAvailableForViewing) {
+          await router.push("/login")
+          return
+        }
+        if (!user?.emailVerified) {
+          await router.push("/email/send")
+          return
+        }
+        // if (!user?.providerData) {
+        //   await router.push("/email/send")
+        //   return
+        // }
       })
     }
     return () => {

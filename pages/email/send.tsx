@@ -12,6 +12,7 @@ const EmailSend = () => {
     console.log('useefe', user?.email, typeof window)
     sendEmail(router, user?.email, user?.emailVerified)
     return () => {
+      console.log('useefed??', user?.email, typeof window)
     }
   }, [user])
   return (

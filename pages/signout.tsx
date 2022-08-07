@@ -8,10 +8,6 @@ import {Loading} from "../components/loading";
 const Signout = () => {
   const router = useRouter()
   const {user} = useAuthContext()
-  const isReady = router.isReady;
-  if (!isReady) {
-    return  Loading
-  }
   const auth = getAuth(app)
   const isLoggedIn = !!user
   if (!isLoggedIn) {
